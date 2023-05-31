@@ -15,19 +15,24 @@
         <article>
             <form action="" method="get">
                 <input type="text" placeholder="result" name="result" value="<?php
+                // CALCULOS PHP
                 error_reporting(E_ALL);
                 ini_set('display_errors', '1');
 
                 if (isset($_GET["boton-num"])) {
-                    echo $_GET["result"] . $_GET["boton-num"];
+                    echo $_GET["result"] != "Error" ? $_GET["result"] . $_GET["boton-num"] :  $_GET["boton-num"];
                 }
 
-                if (isset($_GET["boton-result"]) && isset($_GET["result"])) {
-                    $expression = $_GET["result"];
-                    $result = eval("return $expression;");
-                    echo $result;
+                if (isset($_GET["boton-result"])) {
+                    try {
+                        $expression = $_GET["result"];
+                        echo eval("return $expression;");
+                    } catch (\Throwable $th) {
+                        echo "Error";
+                    }
                 }
                 ?>">
+
                 <div class="grid">
                     <input name="boton-num" value="+" type="submit"></input>
                     <input name="boton-num" value="-" type="submit"></input>
