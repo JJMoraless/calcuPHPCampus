@@ -8,25 +8,32 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <link rel="stylesheet" href="./styles.css">
-
 </head>
 
 <body>
     <main class="container_php">
         <article>
-            <form action="">
-                <input type="number" placeholder="num1" name="num1" value="num2">
-                <input type="number" placeholder="num2" name="num2" value="num2">
-                <input name="boton" value="+" type="submit"></input>
+            <form action="" method="get">
+                <input type="text" placeholder="result" name="result" value="<?php
+                error_reporting(E_ALL);
+                ini_set('display_errors', '1');
 
+                if (isset($_GET["boton-num"])) {
+                    echo $_GET["result"] . $_GET["boton-num"];
+                }
 
-
+                if (isset($_GET["boton-result"]) && isset($_GET["result"])) {
+                    $expression = $_GET["result"];
+                    $result = eval("return $expression;");
+                    echo $result;
+                }
+                ?>">
                 <div class="grid">
-                    <input name="boton" value="-" type="submit"></input>
-                    <input name="boton" value="*" type="submit"></input>
-                    <input name="boton" value="/" type="submit"></input>
+                    <input name="boton-num" value="+" type="submit"></input>
+                    <input name="boton-num" value="-" type="submit"></input>
+                    <input name="boton-num" value="*" type="submit"></input>
+                    <input name="boton-num" value="/" type="submit"></input>
                 </div>
-
                 <div class="grid">
                     <input name="boton-num" value="1" type="submit"></input>
                     <input name="boton-num" value="2" type="submit"></input>
@@ -34,7 +41,6 @@
                     <input name="boton-num" value="4" type="submit"></input>
                     <input name="boton-num" value="5" type="submit"></input>
                 </div>
-
                 <div class="grid">
                     <input name="boton-num" value="6" type="submit"></input>
                     <input name="boton-num" value="7" type="submit"></input>
@@ -42,21 +48,10 @@
                     <input name="boton-num" value="9" type="submit"></input>
                     <input name="boton-num" value="10" type="submit"></input>
                 </div>
+                <input name="boton-result" value="calcu" type="submit"></input>
             </form>
         </article>
-        <?php
-        $funciones = [
-            '+' => fn (int $a, int $b) => $a + $b,
-            '-' => fn (int $a, int $b) => $a - $b,
-            '*' => fn (int $a, int $b) => $a * $b,
-            '/' => fn (int $a, int $b) => $a / $b,
-        ];
-        echo "la operacion es: " . $funciones[$_GET['boton']]($_GET['num1'], $_GET['num2']);
-        ?>
     </main>
-
-
-
 </body>
 
 </html>
